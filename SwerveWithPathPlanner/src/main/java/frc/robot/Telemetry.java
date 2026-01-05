@@ -2,6 +2,7 @@ package frc.robot;
 
 import com.ctre.phoenix6.SignalLogger;
 import com.ctre.phoenix6.swerve.SwerveDrivetrain.SwerveDriveState;
+import com.pathplanner.lib.util.PathPlannerLogging;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
@@ -32,6 +33,13 @@ public class Telemetry {
     public Telemetry(double maxSpeed) {
         MaxSpeed = maxSpeed;
         SignalLogger.start();
+
+        // Register the Field2d widget to SmartDashboard once at startup
+        SmartDashboard.putData("Field", m_field);
+        // Configure PathPlanner logging to update the Field2d widget
+        // This visualizes the active path and target pose when auto is running
+        PathPlannerLogging.setLogActivePathCallback((poses) -> m_field.getObject("path").setPoses(poses));
+        PathPlannerLogging.setLogTargetPoseCallback((pose) -> m_field.getObject("target").setPose(pose));
     }
 
     /* What to publish over networktables for telemetry */
@@ -115,6 +123,15 @@ public class Telemetry {
         /* Telemeterize the pose to a Field2d */
         fieldTypePub.set("Field2d");
         fieldPub.set(m_poseArray);
+        
+        // Correctly update the Field2d object with the new pose
+        m_field.setRobotPose(state.Pose);
+
+        drivePose.set(state.Pose);
+
+        /* Telemeterize the pose to a Field2d */
+        fieldTypePub.set("Field2d");
+        fieldPub.set(m_poseArray);
 
         /* Telemeterize the module states to a Mechanism2d */
         for (int i = 0; i < 4; ++i) {
@@ -125,7 +142,6 @@ public class Telemetry {
             SmartDashboard.putData("Module " + i, m_moduleMechanisms[i]);
         }
 
-        // Add Field2d to SmartDashboard
-        SmartDashboard.putData("Field", m_field);
+    
     }
 }
