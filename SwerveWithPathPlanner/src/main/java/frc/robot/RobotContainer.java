@@ -19,11 +19,13 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.RobotModeTriggers;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
-
+import frc.robot.commands.DriveToPose_cmd;
 import frc.robot.generated.TunerConstants;
 
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.VisionSubsystem;
+
+import frc.robot.Constants;
 
 public class RobotContainer {
     private double MaxSpeed = TunerConstants.kSpeedAt12Volts.in(MetersPerSecond); // kSpeedAt12Volts desired top speed
@@ -94,6 +96,17 @@ public class RobotContainer {
         );
         // reset the field-centric heading on left bumper press
         joystick.leftBumper().onTrue(drivetrain.runOnce(() -> drivetrain.seedFieldCentric()));
+
+        joystick.rightBumper().whileTrue(
+            new DriveToPose_cmd(
+                drivetrain, 
+                Constants.AutopilotConstants.kPathConstraints, 
+                () -> 0, 
+                () -> 0, 
+                joystick, 
+                joystick
+            )
+        );
 
         drivetrain.registerTelemetry(logger::telemeterize);
     }

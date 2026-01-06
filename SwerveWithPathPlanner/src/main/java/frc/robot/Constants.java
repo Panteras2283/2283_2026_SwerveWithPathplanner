@@ -4,14 +4,26 @@
 
 package frc.robot;
 
+import com.pathplanner.lib.path.PathConstraints; // Import this
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.util.Units; // Import this
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 
-/** Add your docs here. */
 public class Constants {
     public static final class AutopilotConstants {
+
+        // --- PATHFINDING CONSTRAINTS ---
+        // Max Velocity (m/s), Max Acceleration (m/s^2), 
+        // Max Angular Velocity (rad/s), Max Angular Acceleration (rad/s^2)
+        public static final PathConstraints kPathConstraints = new PathConstraints(
+            3.0, 
+            3.0, 
+            Units.degreesToRadians(540), 
+            Units.degreesToRadians(720)
+        );
+
        // Field Dimensions (Standard FRC Field)
        public static final double FIELD_LENGTH_METERS = 17.548;
        public static final double FIELD_WIDTH_METERS = 8.052;
@@ -26,7 +38,7 @@ public class Constants {
             Rotation2d three = Rotation2d.fromDegrees(-60);
 
             // --- SIDE 1 (Example: Facing Opponent Driver Station) ---
-            POSES[0][0] = new Pose2d(4.0, 4.0, one); // Side 1, Slot 0 (Left)
+            POSES[0][0] = new Pose2d(3.263, 4.259, one); // Side 1, Slot 0 (Left)
             POSES[0][1] = new Pose2d(4.0, 3.5, one); // Side 1, Slot 1 (Center)
             POSES[0][2] = new Pose2d(4.0, 3.0, one); // Side 1, Slot 2 (Right)
 
