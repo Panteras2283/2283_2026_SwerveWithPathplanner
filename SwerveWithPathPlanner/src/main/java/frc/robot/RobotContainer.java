@@ -101,8 +101,8 @@ public class RobotContainer {
             new DriveToPose_cmd(
                 drivetrain, 
                 Constants.AutopilotConstants.kPathConstraints, 
-                () -> 0, 
-                () -> 0, 
+                () -> drivetrain.selectedSide, 
+                () -> drivetrain.selectedSlot, 
                 joystick, 
                 joystick
             )

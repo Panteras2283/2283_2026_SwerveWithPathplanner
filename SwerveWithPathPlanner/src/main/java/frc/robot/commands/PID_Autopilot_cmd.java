@@ -116,8 +116,8 @@ public class PID_Autopilot_cmd extends Command {
     // The FieldCentric request will automatically convert these field-relative
     // velocities to robot-relative velocities based on the current gyro angle.
     s_Swerve.setControl(driveRequest
-        .withVelocityX(-xOutput)   // Field-relative X velocity (m/s)
-        .withVelocityY(-yOutput)   // Field-relative Y velocity (m/s)
+        .withVelocityX(xOutput)   // Field-relative X velocity (m/s)
+        .withVelocityY(yOutput)   // Field-relative Y velocity (m/s)
         .withRotationalRate(rotationOutput) // Field-relative rotational velocity (rad/s)
     );
 

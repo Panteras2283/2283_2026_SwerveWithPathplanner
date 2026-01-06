@@ -33,7 +33,7 @@ public class Constants {
 
        static {
 
-            Rotation2d one = Rotation2d.fromDegrees(180);
+            Rotation2d one = Rotation2d.fromDegrees(0);
             Rotation2d two = Rotation2d.fromDegrees(-120);
             Rotation2d three = Rotation2d.fromDegrees(-60);
 
@@ -54,7 +54,7 @@ public class Constants {
  
        }
        public static Pose2d getPose(int side, int slot) {
-            // Adjust Side 1-6 to Index 0-5
+           
             int sideIndex = side - 1;
 
             // Safety Checks

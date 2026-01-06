@@ -41,6 +41,9 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
     private Notifier m_simNotifier = null;
     private double m_lastSimTime;
 
+    public int selectedSide = 1; // Default to Side 1 (Valid 1,2 and 6)
+    public int selectedSlot = 0; // Default to Center (Valid 0,1 and 2)
+
     /* Blue alliance sees forward as 0 degrees (toward red alliance wall) */
     private static final Rotation2d kBlueAlliancePerspectiveRotation = Rotation2d.kZero;
     /* Red alliance sees forward as 180 degrees (toward blue alliance wall) */
