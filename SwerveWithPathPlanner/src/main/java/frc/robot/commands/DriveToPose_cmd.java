@@ -46,8 +46,8 @@ public class DriveToPose_cmd extends SequentialCommandGroup {
                 // 2. Get the Scoring Pose
                 Pose2d scoringPose = Constants.AutopilotConstants.getPose(targetSide, targetSlot);
 
-                // 3. Calculate Approach Pose (1 meter back)
-                Pose2d approachPose = scoringPose.transformBy(new Transform2d(-0.5, 0.0, new Rotation2d()));
+                // 3. Calculate Approach Pose (0.25 meter back)
+                Pose2d approachPose = scoringPose.transformBy(new Transform2d(-0.25, 0.0, new Rotation2d()));
 
                 // 4. Return the Pathfind Command
                 return drivetrain.PathfindToPose(approachPose, constraints, 0.0);
