@@ -12,15 +12,18 @@ import com.ctre.phoenix6.swerve.SwerveRequest;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.commands.FollowPathCommand;
 
+import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Transform2d;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.RobotModeTriggers;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
-import frc.robot.commands.DriveToPose_cmd;
+import frc.robot.commands.*;
 import frc.robot.generated.TunerConstants;
+
 
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.VisionSubsystem;
@@ -95,18 +98,33 @@ public class RobotContainer {
             forwardStraight.withVelocityX(-0.5).withVelocityY(0))
         );
         // reset the field-centric heading on left bumper press
-        joystick.leftBumper().onTrue(drivetrain.runOnce(() -> drivetrain.seedFieldCentric()));
+        joystick.start().onTrue(drivetrain.runOnce(() -> drivetrain.seedFieldCentric()));
 
+
+        //Drive to Pose (Precise Positioning)
         joystick.rightBumper().whileTrue(
-            new DriveToPose_cmd(
+            new Precise_DriveToPose_cmd(
                 drivetrain, 
                 Constants.AutopilotConstants.kPathConstraints, 
-                () -> drivetrain.selectedSide, 
-                () -> drivetrain.selectedSlot, 
+                () -> 0, 
+                () -> 2, 
                 joystick, 
                 joystick
             )
         );
+
+        //Drive to Pose (Precise Positioning)
+        joystick.leftBumper().whileTrue(
+            new Fast_DriveToPose_cmd(
+                drivetrain, 
+                Constants.AutopilotConstants.kPathConstraints, 
+                () -> 0, 
+                () -> 0, 
+                joystick, 
+                joystick
+            )
+        );
+
 
         drivetrain.registerTelemetry(logger::telemeterize);
     }

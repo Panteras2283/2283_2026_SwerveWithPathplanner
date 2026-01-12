@@ -18,15 +18,15 @@ public class Constants {
         // Max Velocity (m/s), Max Acceleration (m/s^2), 
         // Max Angular Velocity (rad/s), Max Angular Acceleration (rad/s^2)
         public static final PathConstraints kPathConstraints = new PathConstraints(
-            3.0, 
-            3.0, 
+            4.0, 
+            10.0, 
             Units.degreesToRadians(540), 
             Units.degreesToRadians(720)
         );
 
        // Field Dimensions (Standard FRC Field)
-       public static final double FIELD_LENGTH_METERS = 17.548;
-       public static final double FIELD_WIDTH_METERS = 8.052;
+       public static final double FIELD_LENGTH_METERS = 16.540;
+       public static final double FIELD_WIDTH_METERS = 8.070;
 
        //Pose2d[# of areas][# of targets per area];
        public static final Pose2d[][] POSES = new Pose2d[3][3];
@@ -37,10 +37,10 @@ public class Constants {
             Rotation2d two = Rotation2d.fromDegrees(-120);
             Rotation2d three = Rotation2d.fromDegrees(-60);
 
-            // --- SIDE 1 (Example: Facing Opponent Driver Station) ---
-            POSES[0][0] = new Pose2d(3.263, 4.259, one); // Side 1, Slot 0 (Left)
+            // --- SIDE 1 (Example: Neutral Zone) ---
+            POSES[0][0] = new Pose2d(7, 6.767, Rotation2d.fromDegrees(-45)); // Side 1, Slot 0 (Left)
             POSES[0][1] = new Pose2d(4.0, 3.5, one); // Side 1, Slot 1 (Center)
-            POSES[0][2] = new Pose2d(4.0, 3.0, one); // Side 1, Slot 2 (Right)
+            POSES[0][2] = new Pose2d(7, 1.127, Rotation2d.fromDegrees(45)); // Side 1, Slot 2 (Right)
 
             // --- SIDE 2 ---
             POSES[1][0] = new Pose2d(5.0, 2.0, two);
@@ -55,7 +55,7 @@ public class Constants {
        }
        public static Pose2d getPose(int side, int slot) {
            
-            int sideIndex = side - 1;
+            int sideIndex = side;
 
             // Safety Checks
             if (sideIndex < 0 || sideIndex >= POSES.length) {

@@ -14,7 +14,7 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Constants;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 
-public class DriveToPose_cmd extends SequentialCommandGroup {
+public class Fast_DriveToPose_cmd extends SequentialCommandGroup {
 
     /**
      * Drives to a specific Reef location (dynamic or fixed) in two stages:
@@ -27,7 +27,7 @@ public class DriveToPose_cmd extends SequentialCommandGroup {
      * @param driver The driver controller (for rumble).
      * @param operator The operator controller (for rumble).
      */
-    public DriveToPose_cmd(
+    public Fast_DriveToPose_cmd(
             CommandSwerveDrivetrain drivetrain, 
             PathConstraints constraints,
             Supplier<Integer> sideSupplier, // Changed to Supplier
@@ -46,30 +46,9 @@ public class DriveToPose_cmd extends SequentialCommandGroup {
                 // 2. Get the Scoring Pose
                 Pose2d scoringPose = Constants.AutopilotConstants.getPose(targetSide, targetSlot);
 
-                // 3. Calculate Approach Pose (0.25 meter back)
-                Pose2d approachPose = scoringPose.transformBy(new Transform2d(-0.25, 0.0, new Rotation2d()));
-
                 // 4. Return the Pathfind Command
-                return drivetrain.PathfindToPose(approachPose, constraints, 0.0);
+                return drivetrain.PathfindToPose(scoringPose, constraints, 0.0);
                 
-            }, Set.of(drivetrain)),
-
-            // --- STEP 2: PID Approach for the final meter ---
-            new DeferredCommand(() -> {
-                // 1. Resolve the Suppliers again (in case they changed, though unlikely in 2 seconds)
-                int targetSide = sideSupplier.get();
-                int targetSlot = slotSupplier.get();
-
-                // 2. Get the Scoring Pose
-                Pose2d scoringPose = Constants.AutopilotConstants.getPose(targetSide, targetSlot);
-
-                // 3. Return the PID Command
-                return new PID_Autopilot_cmd(
-                    drivetrain,
-                    scoringPose,
-                    driver,
-                    operator
-                );
             }, Set.of(drivetrain))
         );
     }
