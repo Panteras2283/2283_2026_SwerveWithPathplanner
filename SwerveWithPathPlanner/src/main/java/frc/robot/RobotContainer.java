@@ -113,7 +113,7 @@ public class RobotContainer {
             )
         );
 
-        //Drive to Pose (Precise Positioning)
+        //Drive to Pose (Fast Positioning)
         joystick.leftBumper().whileTrue(
             new Fast_DriveToPose_cmd(
                 drivetrain, 
