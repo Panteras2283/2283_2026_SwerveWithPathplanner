@@ -62,6 +62,7 @@ public class VisionSubsystem extends SubsystemBase {
         } catch (Exception e) {
             System.out.println("Failed to load AprilTagFieldLayout: " + e.getMessage());
         }
+        
         if(fieldLayout != null){
             //Estimator for camera 1
             photonPoseEstimator1 = new PhotonPoseEstimator(
@@ -140,6 +141,7 @@ public class VisionSubsystem extends SubsystemBase {
         }
 
     }
+
     /**
      * Calculates standard deviations based on the number of tags seen and their distance.
      * Lower numbers = more trust in the vision measurement.
