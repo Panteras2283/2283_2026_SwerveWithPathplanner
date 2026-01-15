@@ -23,10 +23,12 @@ import edu.wpi.first.wpilibj2.command.button.RobotModeTriggers;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
 import frc.robot.commands.*;
 import frc.robot.generated.TunerConstants;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
+
 
 
 import frc.robot.subsystems.CommandSwerveDrivetrain;
-import frc.robot.subsystems.VisionSubsystem;
+import frc.robot.subsystems.*;
 
 import frc.robot.Constants;
 
@@ -50,6 +52,7 @@ public class RobotContainer {
     //Subsystems
     public final CommandSwerveDrivetrain drivetrain = TunerConstants.createDrivetrain();
     public final VisionSubsystem vision;
+    public final Intake_demo intake;
 
     /* Path follower */
     private final SendableChooser<Command> autoChooser;
@@ -57,6 +60,8 @@ public class RobotContainer {
     public RobotContainer() {
         
         vision = new VisionSubsystem(drivetrain);
+
+        intake = new Intake_demo();
 
         autoChooser = AutoBuilder.buildAutoChooser("Tests");
         SmartDashboard.putData("Auto Mode", autoChooser);
@@ -125,6 +130,8 @@ public class RobotContainer {
             )
         );
 
+        joystick.y().onTrue(new InstantCommand(() -> intake.feed(1.0)));
+        joystick.y().onFalse(new InstantCommand(() -> intake.stop()));
 
         drivetrain.registerTelemetry(logger::telemeterize);
     }
