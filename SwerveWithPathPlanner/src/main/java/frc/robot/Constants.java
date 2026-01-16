@@ -94,6 +94,6 @@ public class Constants {
     }
 
     public static final class intake {
-        public static final int motorID = 15;
+        public static final int motorID = 23;
     }
 }
