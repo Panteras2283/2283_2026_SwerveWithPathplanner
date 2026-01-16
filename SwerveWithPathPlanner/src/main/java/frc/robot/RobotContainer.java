@@ -130,13 +130,13 @@ public class RobotContainer {
         );
 
         new Trigger(()-> joystick.getLeftTriggerAxis() > 0.2).whileTrue(new RunCommand(()-> intake.feed(joystick.getLeftTriggerAxis()), intake)).onFalse(new InstantCommand(intake::stop, intake));
-        new Trigger(()-> joystick.getRightTriggerAxis() > 0.2).whileTrue(new RunCommand(()-> intake.feed(-joystick.getRightTriggerAxis()), intake)).onFalse(new InstantCommand(intake::stop, intake));
+       // new Trigger(()-> joystick.getRightTriggerAxis() > 0.2).whileTrue(new RunCommand(()-> intake.feed(-joystick.getRightTriggerAxis()), intake)).onFalse(new InstantCommand(intake::stop, intake));
         
         //joystick.leftTrigger().whileTrue(new InstantCommand(() -> intake.feed(joystick.getLeftTriggerAxis())));
-        /*joystick.y().onFalse(new InstantCommand(() -> intake.stop()));
+        /*joystick.y().onFalse(new InstantCommand(() -> intake.stop()));*/
 
-        joystick.x().onTrue(new InstantCommand(() -> intake.feed(-0.7)));
-        joystick.x().onFalse(new InstantCommand(() -> intake.stop()));*/
+        joystick.pov(270).onTrue(new InstantCommand(() -> intake.feed(-0.70)));
+        joystick.pov(270).onFalse(new InstantCommand(() -> intake.stop()));
 
 
         drivetrain.registerTelemetry(logger::telemeterize);
