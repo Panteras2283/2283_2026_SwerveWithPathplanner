@@ -130,8 +130,12 @@ public class RobotContainer {
             )
         );
 
-        joystick.rightBumper().onTrue(new InstantCommand(() -> intake.feed(1.0)));
-        joystick.rightBumper().onFalse(new InstantCommand(() -> intake.stop()));
+
+        joystick.y().onTrue(new InstantCommand(() -> intake.feed(1.0)));
+        joystick.y().onFalse(new InstantCommand(() -> intake.stop()));
+
+        joystick.x().onTrue(new InstantCommand(() -> intake.feed(-0.7)));
+        joystick.x().onFalse(new InstantCommand(() -> intake.stop()));
 
         drivetrain.registerTelemetry(logger::telemeterize);
     }
