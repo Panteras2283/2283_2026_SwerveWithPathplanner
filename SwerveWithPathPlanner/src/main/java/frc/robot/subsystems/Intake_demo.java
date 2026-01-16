@@ -16,13 +16,15 @@ public class Intake_demo extends SubsystemBase {
  /** Creates a new Intake_demo. */
   private TalonFX IntakeMotor = new TalonFX(Constants.intake.motorID);
 
-  double IntakeMotorRPS = IntakeMotor.getVelocity().getValueAsDouble();
-  double IntakeMotorRPM = IntakeMotorRPS*60;
+  
   public Intake_demo() {}
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    double IntakeMotorRPS = IntakeMotor.getVelocity().getValueAsDouble();
+    double IntakeMotorRPM = IntakeMotorRPS*60;
+    
     SmartDashboard.putNumber("Intake RPMs", IntakeMotorRPM);
   }
 

@@ -24,11 +24,10 @@ import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
 import frc.robot.commands.*;
 import frc.robot.generated.TunerConstants;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-
-
-
+import edu.wpi.first.wpilibj2.command.RunCommand;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.*;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
 
 import frc.robot.Constants;
 
@@ -130,12 +129,15 @@ public class RobotContainer {
             )
         );
 
-
-        joystick.y().onTrue(new InstantCommand(() -> intake.feed(1.0)));
-        joystick.y().onFalse(new InstantCommand(() -> intake.stop()));
+        new Trigger(()-> joystick.getLeftTriggerAxis() > 0.2).whileTrue(new RunCommand(()-> intake.feed(joystick.getLeftTriggerAxis()), intake)).onFalse(new InstantCommand(intake::stop, intake));
+        new Trigger(()-> joystick.getRightTriggerAxis() > 0.2).whileTrue(new RunCommand(()-> intake.feed(-joystick.getRightTriggerAxis()), intake)).onFalse(new InstantCommand(intake::stop, intake));
+        
+        //joystick.leftTrigger().whileTrue(new InstantCommand(() -> intake.feed(joystick.getLeftTriggerAxis())));
+        /*joystick.y().onFalse(new InstantCommand(() -> intake.stop()));
 
         joystick.x().onTrue(new InstantCommand(() -> intake.feed(-0.7)));
-        joystick.x().onFalse(new InstantCommand(() -> intake.stop()));
+        joystick.x().onFalse(new InstantCommand(() -> intake.stop()));*/
+
 
         drivetrain.registerTelemetry(logger::telemeterize);
     }
