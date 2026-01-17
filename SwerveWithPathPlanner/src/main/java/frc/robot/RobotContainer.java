@@ -134,14 +134,17 @@ public class RobotContainer {
         );
 
         
-        new Trigger(()-> joystick.getRightTriggerAxis() > 0.2).whileTrue(new RunCommand(()-> s_shooter.shoot(-joystick.getRightTriggerAxis()), s_shooter)).onFalse(new InstantCommand(s_shooter::stopShooter, s_shooter));
+       // new Trigger(()-> joystick.getRightTriggerAxis() > 0.2).whileTrue(new RunCommand(()-> s_shooter.shoot(-joystick.getRightTriggerAxis()), s_shooter)).onFalse(new InstantCommand(s_shooter::stopShooter, s_shooter));
 
         
         
         //joystick.leftTrigger().whileTrue(new InstantCommand(() -> intake.feed(joystick.getLeftTriggerAxis())));
         /*joystick.y().onFalse(new InstantCommand(() -> intake.stop()));*/
-        joystick.y().onTrue(new InstantCommand(()-> s_shooter.kick(-1)));
+        joystick.y().onTrue(new InstantCommand(()-> s_shooter.kick(-0.5)));
         joystick.y().onFalse(new InstantCommand(()-> s_shooter.stopKicker()));
+
+        joystick.x().onTrue(new InstantCommand(()-> s_shooter.shoot(-0.7)));
+        joystick.x().onFalse(new InstantCommand(()-> s_shooter.stopShooter()));
 
         /*joystick.pov(270).onTrue(new InstantCommand(() -> intake.feed(-0.70)));
         joystick.pov(270).onFalse(new InstantCommand(() -> intake.stop()));
