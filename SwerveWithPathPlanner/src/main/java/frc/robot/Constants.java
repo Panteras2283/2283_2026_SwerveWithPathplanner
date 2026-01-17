@@ -96,4 +96,8 @@ public class Constants {
     public static final class intake {
         public static final int motorID = 23;
     }
+
+    public static final class shooter{
+        public static final int flywheelID = 24;
+    }
 }
