@@ -7,6 +7,8 @@ import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.math.geometry.Transform3d;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 import java.io.IOException;
 import java.util.Optional;
 import edu.wpi.first.apriltag.AprilTagFieldLayout;
@@ -51,6 +53,10 @@ public class VisionSubsystem extends SubsystemBase {
     public VisionSubsystem(CommandSwerveDrivetrain drivetrain) {
         this.drivetrain = drivetrain;
 
+
+        SmartDashboard.putBoolean("arducam_left", true);
+        SmartDashboard.putBoolean("arducam_right", true);
+
         //Initialize cameras 
         photon1 = new PhotonCamera(kPhotonCameraName1);
         photon2 = new PhotonCamera(kPhotonCameraName2);
@@ -87,6 +93,7 @@ public class VisionSubsystem extends SubsystemBase {
         updateLimelight();
         updatePhotonVision(photonPoseEstimator1, photon1);
         updatePhotonVision(photonPoseEstimator2, photon2);
+
     }
 
     private void updateLimelight(){
