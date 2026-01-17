@@ -30,6 +30,7 @@ import frc.robot.subsystems.*;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
 import frc.robot.Constants;
+import frc.robot.Constants.shooter;
 
 public class RobotContainer {
     private double MaxSpeed = TunerConstants.kSpeedAt12Volts.in(MetersPerSecond); // kSpeedAt12Volts desired top speed
@@ -51,7 +52,8 @@ public class RobotContainer {
     //Subsystems
     public final CommandSwerveDrivetrain drivetrain = TunerConstants.createDrivetrain();
     public final VisionSubsystem vision;
-    public final Intake_demo intake;
+    //public final Intake_demo intake;
+    public final Shooter s_shooter;
 
     /* Path follower */
     private final SendableChooser<Command> autoChooser;
@@ -60,7 +62,9 @@ public class RobotContainer {
         
         vision = new VisionSubsystem(drivetrain);
 
-        intake = new Intake_demo();
+        //intake = new Intake_demo();
+
+        s_shooter = new Shooter();
 
         autoChooser = AutoBuilder.buildAutoChooser("Tests");
         SmartDashboard.putData("Auto Mode", autoChooser);
@@ -129,14 +133,20 @@ public class RobotContainer {
             )
         );
 
-        new Trigger(()-> joystick.getLeftTriggerAxis() > 0.2).whileTrue(new RunCommand(()-> intake.feed(joystick.getLeftTriggerAxis()), intake)).onFalse(new InstantCommand(intake::stop, intake));
-       // new Trigger(()-> joystick.getRightTriggerAxis() > 0.2).whileTrue(new RunCommand(()-> intake.feed(-joystick.getRightTriggerAxis()), intake)).onFalse(new InstantCommand(intake::stop, intake));
+        
+        new Trigger(()-> joystick.getRightTriggerAxis() > 0.2).whileTrue(new RunCommand(()-> s_shooter.shoot(-joystick.getRightTriggerAxis()), s_shooter)).onFalse(new InstantCommand(s_shooter::stopShooter, s_shooter));
+
+        
         
         //joystick.leftTrigger().whileTrue(new InstantCommand(() -> intake.feed(joystick.getLeftTriggerAxis())));
         /*joystick.y().onFalse(new InstantCommand(() -> intake.stop()));*/
+        joystick.y().onTrue(new InstantCommand(()-> s_shooter.kick(-1)));
+        joystick.y().onFalse(new InstantCommand(()-> s_shooter.stopKicker()));
 
-        joystick.pov(270).onTrue(new InstantCommand(() -> intake.feed(-0.70)));
+        /*joystick.pov(270).onTrue(new InstantCommand(() -> intake.feed(-0.70)));
         joystick.pov(270).onFalse(new InstantCommand(() -> intake.stop()));
+*/
+        
 
 
         drivetrain.registerTelemetry(logger::telemeterize);
