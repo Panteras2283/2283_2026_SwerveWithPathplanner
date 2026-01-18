@@ -9,12 +9,17 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.sim.TalonFXSimState;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
+import com.ctre.phoenix6.controls.VelocityVoltage;
+
 import frc.robot.Constants;
 
 public class Shooter extends SubsystemBase {
   /** Creates a new Shooter. */
-  private TalonFX JoshAllen = new TalonFX(Constants.shooter.flywheelID);
+  private TalonFX SamDarnold = new TalonFX(Constants.shooter.flywheelID);
   private TalonFX Brandon_aubrey = new TalonFX(Constants.shooter.kickerID);
+
+  private VelocityVoltage m_request = new VelocityVoltage(0).withSlot(0);
+
 
   
   public Shooter() {
@@ -29,17 +34,22 @@ public class Shooter extends SubsystemBase {
     slot0Configs.kV = Constants.shooter.slot0V;
     slot0Configs.kA = Constants.shooter.slot0A;
 
-    JoshAllen.getConfigurator().apply(slot0Configs);
-    JoshAllen.getConfigurator().apply(slot0Configs);
+    SamDarnold.getConfigurator().apply(slot0Configs);
+    SamDarnold.getConfigurator().apply(slot0Configs);
   }
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+
+    double ShooterRPS = SamDarnold.getVelocity().getValueAsDouble();
+    double ShooterRPM = ShooterRPS*60;
+    
+    SmartDashboard.putNumber("Shooter RPMs", ShooterRPM);
   }
 
-  public void shoot(double speed){
-    JoshAllen.set(speed);
+  public void shoot(){
+    SamDarnold.setControl(m_request.withVelocity(-70));
   } 
 
   public void kick(double speed){
@@ -47,7 +57,7 @@ public class Shooter extends SubsystemBase {
   }
 
   public void stopShooter(){
-    JoshAllen.set(0);
+    SamDarnold.set(0);
   }
 
   public void stopKicker(){

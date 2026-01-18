@@ -104,7 +104,7 @@ public class Constants {
         public static final double slot0S = 0.1;
         public static final double slot0V = 0.12;
         public static final double slot0A = 0.0012;
-        public static final double slot0P = 0.21;
+        public static final double slot0P = 0.18;
         public static final double slot0I = 0.0;
         public static final double slot0D = 0.0;
     }

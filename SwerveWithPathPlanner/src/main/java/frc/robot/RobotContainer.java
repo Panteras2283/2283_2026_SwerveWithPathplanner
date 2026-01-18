@@ -99,12 +99,12 @@ public class RobotContainer {
             point.withModuleDirection(new Rotation2d(-joystick.getLeftY(), -joystick.getLeftX()))
         ));
 
-        joystick.pov(0).whileTrue(drivetrain.applyRequest(() ->
+       /* joystick.pov(0).whileTrue(drivetrain.applyRequest(() ->
             forwardStraight.withVelocityX(0.5).withVelocityY(0))
         );
         joystick.pov(180).whileTrue(drivetrain.applyRequest(() ->
             forwardStraight.withVelocityX(-0.5).withVelocityY(0))
-        );
+        );*/
         // reset the field-centric heading on left bumper press
         joystick.start().onTrue(drivetrain.runOnce(() -> drivetrain.seedFieldCentric()));
 
@@ -140,15 +140,17 @@ public class RobotContainer {
         
         //joystick.leftTrigger().whileTrue(new InstantCommand(() -> intake.feed(joystick.getLeftTriggerAxis())));
         /*joystick.y().onFalse(new InstantCommand(() -> intake.stop()));*/
-        joystick.y().onTrue(new InstantCommand(()-> s_shooter.kick(-0.5)));
-        joystick.y().onFalse(new InstantCommand(()-> s_shooter.stopKicker()));
+        joystick.x().onTrue(new InstantCommand(()-> s_shooter.kick(-0.4)));
+        joystick.x().onFalse(new InstantCommand(()-> s_shooter.stopKicker()));
 
-        joystick.x().onTrue(new InstantCommand(()-> s_shooter.shoot(-0.7)));
-        joystick.x().onFalse(new InstantCommand(()-> s_shooter.stopShooter()));
+        joystick.pov(90).onTrue(new InstantCommand(()-> s_shooter.shoot()));
+        joystick.pov(90).onFalse(new InstantCommand(()-> s_shooter.stopShooter()));
 
         /*joystick.pov(270).onTrue(new InstantCommand(() -> intake.feed(-0.70)));
         joystick.pov(270).onFalse(new InstantCommand(() -> intake.stop()));
-*/
+
+        joystick.y().onTrue(new InstantCommand(()-> intake.feed(0.7)));
+        joystick.y().onFalse(new InstantCommand(()-> intake.stop()));*/
         
 
 
