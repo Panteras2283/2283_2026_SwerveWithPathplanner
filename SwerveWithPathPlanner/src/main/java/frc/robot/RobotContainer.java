@@ -52,7 +52,7 @@ public class RobotContainer {
     //Subsystems
     public final CommandSwerveDrivetrain drivetrain = TunerConstants.createDrivetrain();
     public final VisionSubsystem vision;
-    //public final Intake_demo intake;
+    public final Intake_demo intake;
     public final Shooter s_shooter;
 
     /* Path follower */
@@ -62,7 +62,7 @@ public class RobotContainer {
         
         vision = new VisionSubsystem(drivetrain);
 
-        //intake = new Intake_demo();
+        intake = new Intake_demo();
 
         s_shooter = new Shooter();
 
@@ -146,11 +146,11 @@ public class RobotContainer {
         joystick.pov(90).onTrue(new InstantCommand(()-> s_shooter.shoot()));
         joystick.pov(90).onFalse(new InstantCommand(()-> s_shooter.stopShooter()));
 
-        /*joystick.pov(270).onTrue(new InstantCommand(() -> intake.feed(-0.70)));
+        joystick.pov(270).onTrue(new InstantCommand(() -> intake.feed(-0.70)));
         joystick.pov(270).onFalse(new InstantCommand(() -> intake.stop()));
 
         joystick.y().onTrue(new InstantCommand(()-> intake.feed(0.7)));
-        joystick.y().onFalse(new InstantCommand(()-> intake.stop()));*/
+        joystick.y().onFalse(new InstantCommand(()-> intake.stop()));
         
 
 
